@@ -303,7 +303,6 @@ export const AuthApi = {
         try {
             // const response = await axios.put(`http://localhost:3000/api/event/${id}`,{start_date: start_date, end_date: end_date},{ withCredentials: true });
             const response = await axios.put(`https://final-project-gateway.onrender.com/api/event/${id}`,{start_date: start_date, end_date: end_date},{ withCredentials: true });
-            console.log(response);
             if (response.status === 200) {
                 return response;
             } else {
