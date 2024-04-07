@@ -169,6 +169,9 @@ export const BOEventPage:React.FC<Page> = ({eventDetails,permission,setCurrentPa
                         <Text size="sm" fw={700} mt="md">
                           Event By: {event.organizer}
                         </Text>
+						<Text size="sm" fw={700} mt="md">
+                          Event Location: {event.location}
+                        </Text>
                         <Text lineClamp={3} size="xs" fw={700} mt="md">
                           Description: {event.description}
                         </Text>

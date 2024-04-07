@@ -211,6 +211,9 @@ export const EventPage:React.FC<Page> = ({setCurrentPage,eventDetails,setTicketD
                         <Text size="sm" fw={700} mt="md">
                           Event By: {event.organizer}
                         </Text>
+						<Text size="sm" fw={700} mt="md">
+                          Event Location: {event.location}
+                        </Text>
                         <Text lineClamp={3} size="xs" fw={700} mt="md">
                           Description: {event.description}
                         </Text>
