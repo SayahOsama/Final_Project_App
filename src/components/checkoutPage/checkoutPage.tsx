@@ -8,6 +8,13 @@ import { Loader } from '../loader/loader';
 import { format } from 'date-fns';
 import { ErrorMessage } from '../error/error';
 
+function generateOrderID(): string {
+  const prefix = "ORD";
+  const timestamp = Date.now(); // current time in milliseconds
+  const randomPart = Math.floor(Math.random() * 1e6).toString().padStart(6, '0');
+  return `${prefix}-${timestamp}-${randomPart}`;
+}
+
 export const CheckoutPage:React.FC<Page> = ({username,ticketDetails,eventDetails,setOrderId,setCurrentPage,reserved,setReserved,purchased,setPurchased}) => {
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [validCreditCard, setValidCreditCard] = useState<boolean>(false);
@@ -161,23 +168,24 @@ export const CheckoutPage:React.FC<Page> = ({username,ticketDetails,eventDetails
           //const payment = await AuthApi.createPayment(formData.cardNumber,formData.name,formData.cvv,formData.expDate,ticketDetails.amount*parseInt(ticketDetails.ticketPrice));
           //if(!isAPIStatusEnum(payment)){
           if(1){
-           const order = await AuthApi.createOrder(username,payment.data.paymentToken,eventDetails._id,ticketDetails.ticketType,ticketDetails.amount,eventDetails.start_date);
-           if(!isAPIStatusEnum(order)){
+          const orderID = generateOrderID();
+          const order = await AuthApi.createOrder(username,orderID,eventDetails._id,ticketDetails.ticketType,ticketDetails.amount,eventDetails.start_date);
+          if(!isAPIStatusEnum(order)){
             setPurchased(true);
-            setOrderId(payment.data.paymentToken);
+            setOrderId(orderID);
             setCurrentPage('success');
             setIsLoading(false);
             return;
-           }else{
+          }else{
             setPurchased(false);
             setErrorMessage('Failed to create order, please try again');
-            let refund = await AuthApi.refundPayment(payment.data.paymentToken);
-            while(refund.status !== 200){
-              refund = await AuthApi.refundPayment(payment.data.paymentToken);
-            }
+            // let refund = await AuthApi.refundPayment(payment.data.paymentToken);
+            // while(refund.status !== 200){
+            //   refund = await AuthApi.refundPayment(payment.data.paymentToken);
+            // }
             setIsLoading(false);
             return;
-           }
+          }
           }else{
             setPurchased(false);
             setErrorMessage('Failed to Submit Payment, please try again');
@@ -192,10 +200,11 @@ export const CheckoutPage:React.FC<Page> = ({username,ticketDetails,eventDetails
             //const payment = await AuthApi.createPayment(formData.cardNumber,formData.name,formData.cvv,formData.expDate,ticketDetails.amount*parseInt(ticketDetails.ticketPrice));
             //if(!isAPIStatusEnum(payment)){
             if(1){
-              const order = await AuthApi.createOrder(username,payment.data.paymentToken,eventDetails._id,ticketDetails.ticketType,ticketDetails.amount,eventDetails.start_date);
+              const orderID = generateOrderID();
+              const order = await AuthApi.createOrder(username,orderID,eventDetails._id,ticketDetails.ticketType,ticketDetails.amount,eventDetails.start_date);
               if(!isAPIStatusEnum(order)){
                 setPurchased(true);
-                setOrderId(payment.data.paymentToken);
+                setOrderId(orderID);
                 setCurrentPage('success');
                 setIsLoading(false);
                 return;
@@ -206,10 +215,10 @@ export const CheckoutPage:React.FC<Page> = ({username,ticketDetails,eventDetails
                 while(isAPIStatusEnum(res)){
                   res = await AuthApi.updateTicketsAmount(eventDetails._id,ticketDetails.amount,ticketDetails.ticketType);
                 }
-                let refund = await AuthApi.refundPayment(payment.data.paymentToken);
-                while(refund.status !== 200){
-                  refund = await AuthApi.refundPayment(payment.data.paymentToken);
-                }
+                // let refund = await AuthApi.refundPayment(payment.data.paymentToken);
+                // while(refund.status !== 200){
+                //   refund = await AuthApi.refundPayment(payment.data.paymentToken);
+                // }
                 setIsLoading(false);
                 return;
               }
