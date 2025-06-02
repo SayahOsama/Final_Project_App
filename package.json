@@ -1,5 +1,6 @@
 {
   "name": "final-project-app",
+  "homepage": "https://sayahosama.github.io/Final_Project_App/",
   "private": true,
   "version": "0.0.0",
   "scripts": {
@@ -16,7 +17,9 @@
     "vitest:watch": "vitest",
     "test": "npm run typecheck && npm run prettier && npm run lint && npm run vitest && npm run build",
     "storybook": "storybook dev -p 6006",
-    "storybook:build": "storybook build"
+    "storybook:build": "storybook build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@mantine/core": "^7.7.1",
@@ -27,6 +30,7 @@
     "axios": "^1.6.8",
     "date-fns": "^3.6.0",
     "dayjs": "^1.11.10",
+    "gh-pages": "^6.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.3",
