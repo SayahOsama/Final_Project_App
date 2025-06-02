@@ -17,8 +17,9 @@ export const PersonalPage:React.FC<Page> = ({username,setNextEvent}) => {
   const [orders, setOrders] = useState<any>([]);
 
   const handleButton = async (id:string,orderId:string) => {
-    const res = await AuthApi.refundPayment(orderId);
-    if(res.status == 200){
+    //const res = await AuthApi.refundPayment(orderId);
+    //if(res.status == 200){
+    if(1){
       const refund = await AuthApi.deleteOrder(username,id);
       if(!isAPIStatusEnum(refund)){
         const updatedOrders = orders.filter((order:any) => order.orderDetails._id !== id);
