@@ -158,8 +158,9 @@ export const CheckoutPage:React.FC<Page> = ({username,ticketDetails,eventDetails
       setIsLoading(true);
       if(reserved){
         if(ticketDetails){
-          const payment = await AuthApi.createPayment(formData.cardNumber,formData.name,formData.cvv,formData.expDate,ticketDetails.amount*parseInt(ticketDetails.ticketPrice));
-          if(!isAPIStatusEnum(payment)){
+          //const payment = await AuthApi.createPayment(formData.cardNumber,formData.name,formData.cvv,formData.expDate,ticketDetails.amount*parseInt(ticketDetails.ticketPrice));
+          //if(!isAPIStatusEnum(payment)){
+          if(1){
            const order = await AuthApi.createOrder(username,payment.data.paymentToken,eventDetails._id,ticketDetails.ticketType,ticketDetails.amount,eventDetails.start_date);
            if(!isAPIStatusEnum(order)){
             setPurchased(true);
@@ -188,8 +189,9 @@ export const CheckoutPage:React.FC<Page> = ({username,ticketDetails,eventDetails
         if(ticketDetails){
           const res = await AuthApi.updateTicketsAmount(eventDetails._id,-ticketDetails.amount,ticketDetails.ticketType);
           if(!isAPIStatusEnum(res)){
-            const payment = await AuthApi.createPayment(formData.cardNumber,formData.name,formData.cvv,formData.expDate,ticketDetails.amount*parseInt(ticketDetails.ticketPrice));
-            if(!isAPIStatusEnum(payment)){
+            //const payment = await AuthApi.createPayment(formData.cardNumber,formData.name,formData.cvv,formData.expDate,ticketDetails.amount*parseInt(ticketDetails.ticketPrice));
+            //if(!isAPIStatusEnum(payment)){
+            if(1){
               const order = await AuthApi.createOrder(username,payment.data.paymentToken,eventDetails._id,ticketDetails.ticketType,ticketDetails.amount,eventDetails.start_date);
               if(!isAPIStatusEnum(order)){
                 setPurchased(true);
